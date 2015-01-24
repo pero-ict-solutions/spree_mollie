@@ -3,6 +3,8 @@ SpreeMollie
 
 Except payments using the [Mollie](https://www.mollie.com) payment provider in Spree
 
+[![Code Climate](https://codeclimate.com/github/pero-ict-solutions/spree_mollie/badges/gpa.svg)](https://codeclimate.com/github/pero-ict-solutions/spree_mollie)
+
 Installation
 ------------
 
