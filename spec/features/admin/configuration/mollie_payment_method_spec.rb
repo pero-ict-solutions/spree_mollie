@@ -12,12 +12,12 @@ describe "Mollie Payment Method" do
     it "should be able to create a new mollie payment method" do
       click_link "Payment Methods"
       click_link "admin_new_payment_methods_link"
-      page.should have_content("New Payment Method")
+      expect(page).to have_content("New Payment Method")
       fill_in "payment_method_name", :with => "Mollie Payments"
       fill_in "payment_method_description", :with => "Mollie Description"
       select "PaymentMethod::Mollie", :from => "gtwy-type"
       click_button "Create"
-      page.should have_content("successfully created!")
+      expect(page).to have_content("successfully created!")
     end
   end
 
@@ -33,9 +33,9 @@ describe "Mollie Payment Method" do
     it "and set the mollie api key" do
       fill_in "payment_method_mollie_preferred_api_key", :with => "my-very-cool-key"
       click_button "Update"
-      page.should have_content("successfully updated!")
+      expect(page).to have_content("successfully updated!")
       find_field("payment_method_mollie_preferred_api_key").value.should == "my-very-cool-key"
     end
   end
-  
+
 end
