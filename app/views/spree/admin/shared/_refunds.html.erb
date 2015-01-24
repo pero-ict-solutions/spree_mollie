@@ -1,0 +1,22 @@
+<table class="table table-condensed table-bordered" id='refunds' data-order-id='<%= @order.number %>'>
+  <thead>
+    <tr data-hook="refunds_header">
+      <th><%= "#{Spree.t('date')}/#{Spree.t('time')}" %></th>
+      <th><%= Spree.t(:amount) %></th>
+      <th><%= Spree.t(:payment_method) %></th>
+      <th><%= Spree.t(:transaction_id) %></th>
+      <th><%= Spree.t(:reason) %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% refunds.each do |refund| %>
+      <tr id="<%= dom_id(refund) %>" data-hook="refunds_row" class="<%= cycle('odd', 'even', name: 'refund_table_cycle')%>">
+        <td><%= pretty_time(refund.created_at) %></td>
+        <td class="amount"><%= refund.display_amount %></td>
+        <td><%= payment_method_name(refund.payment) %></td>
+        <td><%= refund.transaction_id %></td>
+        <td><%= truncate(refund.reason.name, length: 100) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

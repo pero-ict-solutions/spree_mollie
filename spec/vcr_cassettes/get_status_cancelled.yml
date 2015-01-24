@@ -1,0 +1,45 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.mollie.nl/v1/payments/tr_kKFSWQRRwy
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Authorization:
+      - Bearer test_pw5ZHNihuiFKefzBwZVwAdKXt5C4Xe
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 22 Jan 2015 13:02:13 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '368'
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Encoding
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Max-Age:
+      - '300'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+      X-Whom:
+      - dc1-web-3
+    body:
+      encoding: UTF-8
+      string: '{"id":"tr_kKFSWQRRwy","mode":"test","createdDatetime":"2015-01-22T13:00:52.0Z","status":"cancelled","cancelledDatetime":"2015-01-22T13:01:43.0Z","amount":"99.99","description":"My
+        Cool product","method":null,"metadata":null,"details":null,"locale":"en","links":{"webhookUrl":"https://37094d3f.ngrok.com/mollie/notify","redirectUrl":"http://mystore.com/orders/update"}}'
+    http_version: 
+  recorded_at: Thu, 22 Jan 2015 13:02:13 GMT
+recorded_with: VCR 2.9.3

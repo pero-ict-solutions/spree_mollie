@@ -1,0 +1,20 @@
+<fieldset >
+  <legend align="center"><%= Spree.t(:transaction, :scope => :mollie) %></legend>
+  <div style="margin-bottom: 20px;">
+    <div>
+      <%= Spree.t(:transaction_id) %> : <%= payment.order.mollie_transaction_id %>
+    </div>
+    <div>
+      <%= Spree.t(:payment_state, :scope => :mollie) %> : <%= payment.state %>
+    </div>
+    <% if payment.refunds.empty? %>
+        <% if payment.state == 'completed' %>
+            <%= button_link_to Spree.t('actions.refund', scope: :mollie), spree.mollie_refund_admin_order_payment_path(@order, payment), icon: 'money' %>
+        <% end %>
+    <% else %>
+        <div>
+          <%= Spree.t(:refunded_at, :scope => :mollie) %> : <%= pretty_time(payment.refunds.last.created_at) %>
+        </div>
+    <% end %>
+  </div>
+</fieldset>
