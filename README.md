@@ -3,7 +3,10 @@ SpreeMollie
 
 Except payments using the [Mollie](https://www.mollie.com) payment provider in Spree
 
+[![wercker status](https://app.wercker.com/status/52c82d6a6ba0e8d59a4bde329939e420/m "wercker status")](https://app.wercker.com/project/bykey/52c82d6a6ba0e8d59a4bde329939e420)
+
 [![Code Climate](https://codeclimate.com/github/pero-ict-solutions/spree_mollie/badges/gpa.svg)](https://codeclimate.com/github/pero-ict-solutions/spree_mollie)
+
 
 Installation
 ------------
