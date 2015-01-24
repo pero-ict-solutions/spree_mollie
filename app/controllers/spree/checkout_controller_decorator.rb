@@ -12,8 +12,7 @@ Spree::CheckoutController.class_eval do
       if payment_method && payment_method.is_a?(Spree::PaymentMethod::Mollie)
         status_object = MolliePaymentService.new(payment_method: payment_method,
                                                  order: @order,
-                                                 redirect_url: order_url(@order))
-                                            .create_payment
+                                                 redirect_url: order_url(@order)).create_payment
         if status_object.mollie_error?
           mollie_error && return
         end
