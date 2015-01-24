@@ -1,7 +1,7 @@
 SpreeMollie
 ===========
 
-Introduction goes here.
+Except payments using the [Mollie](https://www.mollie.com) payment provider in Spree
 
 Installation
 ------------
@@ -36,4 +36,4 @@ Simply add this require statement to your spec_helper:
 require 'spree_mollie/factories'
 ```
 
-Copyright (c) 2015 [name of extension creator], released under the New BSD License
+Copyright (c) 2015 PeRo ICT Solutions, released under the New BSD License
