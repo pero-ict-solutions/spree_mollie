@@ -7,6 +7,8 @@ Except payments using the [Mollie](https://www.mollie.com) payment provider in S
 
 [![Code Climate](https://codeclimate.com/github/pero-ict-solutions/spree_mollie/badges/gpa.svg)](https://codeclimate.com/github/pero-ict-solutions/spree_mollie)
 
+[![Test Coverage](https://codeclimate.com/github/pero-ict-solutions/spree_mollie/badges/coverage.svg)](https://codeclimate.com/github/pero-ict-solutions/spree_mollie)
+
 
 Installation
 ------------
