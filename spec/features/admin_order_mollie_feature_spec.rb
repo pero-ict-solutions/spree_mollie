@@ -5,7 +5,8 @@ describe "Order Paid By Mollie" do
 
   before(:each) do
     @pm =  create(:mollie_payment_method, preferences: { api_key: 'test_pw5ZHNihuiFKefzBwZVwAdKXt5C4Xe' })
-    @order = create(:order_paid_by_mollie, mollie_transaction_id: 'tr_Et8BmUSq7B')
+    @order = create(:order_paid_by_mollie)
+    @order.payments.last.update(response_code: 'tr_Et8BmUSq7B')
   end
 
   context "admin visits orders", js: true do

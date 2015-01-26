@@ -16,7 +16,8 @@ describe Spree::MollieController do
     # context 'when payment is paid' do
     #   it 'payment returns the paid state' do
     #     VCR.use_cassette('get_status_paid') do
-    #       order = create(:completed_order_with_pending_payment, mollie_transaction_id: 'tr_dkiVfRMs4W')
+    #       order = create(:completed_order_with_pending_payment)
+    #       order.payments.last.update(response_code: 'tr_dkiVfRMs4W')
     #       order.payments.last.started_processing!
     #       expect {
     #            post :notify, id: 'tr_dkiVfRMs4W', use_route: :spree
@@ -28,7 +29,8 @@ describe Spree::MollieController do
     context 'when payment is cancelled' do
       it 'payment returns the failed state' do
         VCR.use_cassette('get_status_cancelled') do
-          order = create(:completed_order_with_pending_payment, mollie_transaction_id: 'tr_kKFSWQRRwy')
+          order = create(:completed_order_with_pending_payment )
+          order.payments.last.update(response_code: 'tr_kKFSWQRRwy')
           order.payments.last.started_processing!
           expect {
             post :notify, id: 'tr_kKFSWQRRwy', use_route: :spree
