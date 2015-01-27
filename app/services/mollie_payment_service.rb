@@ -103,6 +103,7 @@ class MolliePaymentService
     if status_object.refunded?
       default_reason = Spree::RefundReason.find_or_create_by(name: Spree.t(:default_refund_reason, scope: 'mollie'))
       @payment.refunds.create!(transaction_id: response[:id], amount: @payment.amount, reason: default_reason)
+      @payment.void!
     else
       status_object.add_error(status_object.response_status)
     end
