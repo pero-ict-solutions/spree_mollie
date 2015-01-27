@@ -50,40 +50,37 @@ class MolliePaymentService
   def update_payment_status
     response = payment_status_in_mollie(@payment_id)
 
-    order = Spree::Order.where(mollie_transaction_id: response['id']).first
-    if order && order.payments
-      payment = order.payments.last
+    payment = Spree::Payment.find_by_response_code(response['id'])
 
-      unless payment.completed? || payment.failed?
-        case response['status']
-          when 'cancelled', 'expired'
-            payment.failure!
-          when 'pending'
-            payment.pend!
-          when 'paid', 'paidout'
-            payment.complete!
-        end
+    unless payment.completed? || payment.failed?
+      case response['status']
+        when 'cancelled', 'expired'
+          payment.failure!
+        when 'pending'
+          payment.pend!
+        when 'paid', 'paidout'
+          payment.complete!
       end
-    end
+    end if payment
 
   end
 
   def create_payment
     amount = @order.total
     description = "Order #{@order.number}"
-    response = mollie_client.prepare_payment(amount, description, @redirect_url)
+    response = mollie_client.prepare_payment(amount, description, @redirect_url, {order_id: @order.number})
     status_object = StatusObject.new(response)
     if status_object.open?
       payment = @order.payments.build(
           payment_method_id: @payment_method.id,
           amount: @order.total,
-          state: 'checkout'
+          state: 'checkout',
+          response_code: status_object.transaction_id
       )
 
       unless payment.save
         status_object.add_error(payment.errors.full_messages.join("\n"))
       end
-      @order.update_attribute(:mollie_transaction_id, status_object.transaction_id)
 
       unless @order.next
         status_object.add_error(@order.errors.full_messages.join("\n"))
@@ -98,7 +95,7 @@ class MolliePaymentService
   end
 
   def refund_payment
-    response = mollie_client.refund_payment(@order.mollie_transaction_id)
+    response = mollie_client.refund_payment(@payment.transaction_id)
 
     status = response['error'] ? response['error']['message'] : response['payment']['status']
     status_object = StatusObject.new('status' => status)
@@ -106,6 +103,7 @@ class MolliePaymentService
     if status_object.refunded?
       default_reason = Spree::RefundReason.find_or_create_by(name: Spree.t(:default_refund_reason, scope: 'mollie'))
       @payment.refunds.create!(transaction_id: response[:id], amount: @payment.amount, reason: default_reason)
+      @payment.void!
     else
       status_object.add_error(status_object.response_status)
     end

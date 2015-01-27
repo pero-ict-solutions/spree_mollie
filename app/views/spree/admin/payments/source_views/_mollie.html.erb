@@ -2,7 +2,7 @@
   <legend align="center"><%= Spree.t(:transaction, :scope => :mollie) %></legend>
   <div style="margin-bottom: 20px;">
     <div>
-      <%= Spree.t(:transaction_id) %> : <%= payment.order.mollie_transaction_id %>
+      <%= Spree.t(:transaction_id) %> : <%= payment.transaction_id %>
     </div>
     <div>
       <%= Spree.t(:payment_state, :scope => :mollie) %> : <%= payment.state %>

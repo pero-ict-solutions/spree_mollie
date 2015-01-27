@@ -21,7 +21,7 @@ describe "Mollie Payment Method" do
     end
   end
 
-  context "admin can configure the mollie payment" do
+  context "admin can configure the mollie payment", js: true do
     before(:each) do
       Spree::PaymentMethod::Mollie.create!({name: "Mollie"})
       click_link "Payment Methods"
@@ -31,11 +31,11 @@ describe "Mollie Payment Method" do
     end
 
     it "and set the mollie api key" do
+      wait_for_ajax
       fill_in "payment_method_mollie_preferred_api_key", :with => "my-very-cool-key"
       click_button "Update"
       expect(page).to have_content("successfully updated!")
-      find_field("payment_method_mollie_preferred_api_key").value.should == "my-very-cool-key"
+      expect(find_field("payment_method_mollie_preferred_api_key").value).to eql "my-very-cool-key"
     end
   end
-
 end

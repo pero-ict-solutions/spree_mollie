@@ -13,3 +13,17 @@ pkg
 *.swp
 spec/dummy
 .bundle
+
+
+# editors shit
+*.swp
+*.swo
+*.sublime-workspace
+*.idea
+.idea/**
+.project
+.idea
+
+
+.ruby-gemset
+.ruby-version
