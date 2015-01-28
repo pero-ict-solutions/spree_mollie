@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe "Order Paid By Mollie" do
+
+  include RSpec::Rails::RequestExampleGroup
+
   stub_authorization!
 
   let!(:product) { create(:product, :name => 'iPad') }
@@ -46,7 +49,8 @@ describe "Order Paid By Mollie" do
     click_button "Save and Continue"
     click_link "Back to the website"
 
-    Spree::Payment.last.failure! # emulate mollie#notify call from api
+    # emulate mollie#notify call from external api
+    post '/mollie/notify', id: Spree::Payment.last.transaction_id, use_route: :spree
   end
 
   def pay_for_order_with_paypal
@@ -54,7 +58,8 @@ describe "Order Paid By Mollie" do
     click_button "Creditcard"
     click_button "Verder naar uw webshop"
 
-    Spree::Payment.last.complete! # emulate mollie#notify call from api
+    # emulate mollie#notify call from external api
+    post '/mollie/notify', id: Spree::Payment.last.transaction_id, use_route: :spree
   end
 
   shared_examples 'order with 1 payment' do |expected_payment_status|

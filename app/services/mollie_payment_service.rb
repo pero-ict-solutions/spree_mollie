@@ -55,11 +55,11 @@ class MolliePaymentService
     unless payment.completed? || payment.failed?
       case response['status']
         when 'cancelled', 'expired'
-          payment.failure!
+          payment.failure! unless payment.failed?
         when 'pending'
-          payment.pend!
+          payment.pend! unless payment.pending?
         when 'paid', 'paidout'
-          payment.complete!
+          payment.complete! unless payment.completed?
       end
     end if payment
 
