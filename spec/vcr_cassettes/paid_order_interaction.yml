@@ -1,0 +1,129 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.mollie.nl/v1/payments
+    body:
+      encoding: UTF-8
+      string: amount=19.99&description=Order%20R596225894&redirectUrl=http%3A%2F%2F127.0.0.1%3A60601%2Fmollie%2Fcheck_status%2FR596225894&metadata[order_id]=R596225894&method=
+    headers:
+      Authorization:
+      - Bearer test_pw5ZHNihuiFKefzBwZVwAdKXt5C4Xe
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 29 Jan 2015 14:54:07 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '433'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Max-Age:
+      - '300'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+      X-Whom:
+      - dc1-web-3
+    body:
+      encoding: UTF-8
+      string: '{"id":"tr_ungvmxzhuc","mode":"test","createdDatetime":"2015-01-29T14:54:07.0Z","status":"open","expiryPeriod":"PT15M","amount":"19.99","description":"Order
+        R596225894","method":null,"metadata":{"order_id":"R596225894"},"details":null,"links":{"paymentUrl":"https://www.mollie.com/payscreen/pay/ungvmxzhuc","webhookUrl":"http://37094d3f.ngrok.com//mollie/notify","redirectUrl":"http://127.0.0.1:60601/mollie/check_status/R596225894"}}'
+    http_version: 
+  recorded_at: Thu, 29 Jan 2015 14:54:08 GMT
+- request:
+    method: get
+    uri: https://api.mollie.nl/v1/payments/tr_ungvmxzhuc
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Authorization:
+      - Bearer test_pw5ZHNihuiFKefzBwZVwAdKXt5C4Xe
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 29 Jan 2015 14:54:12 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '473'
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Encoding
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Max-Age:
+      - '300'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+      X-Whom:
+      - dc1-web-3
+    body:
+      encoding: UTF-8
+      string: '{"id":"tr_ungvmxzhuc","mode":"test","createdDatetime":"2015-01-29T14:54:07.0Z","status":"paid","paidDatetime":"2015-01-29T14:54:12.0Z","amount":"19.99","description":"Order
+        R596225894","method":"creditcard","metadata":{"order_id":"R596225894"},"details":{"cardHolder":"T.
+        TEST","cardNumber":"6787","cardSecurity":"normal"},"locale":"en","links":{"webhookUrl":"http://37094d3f.ngrok.com//mollie/notify","redirectUrl":"http://127.0.0.1:60601/mollie/check_status/R596225894"}}'
+    http_version: 
+  recorded_at: Thu, 29 Jan 2015 14:54:13 GMT
+- request:
+    method: get
+    uri: https://api.mollie.nl/v1/payments/tr_ungvmxzhuc
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Authorization:
+      - Bearer test_pw5ZHNihuiFKefzBwZVwAdKXt5C4Xe
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 29 Jan 2015 14:54:28 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '473'
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Encoding
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Max-Age:
+      - '300'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+      X-Whom:
+      - dc1-web-3
+    body:
+      encoding: UTF-8
+      string: '{"id":"tr_ungvmxzhuc","mode":"test","createdDatetime":"2015-01-29T14:54:07.0Z","status":"paid","paidDatetime":"2015-01-29T14:54:12.0Z","amount":"19.99","description":"Order
+        R596225894","method":"creditcard","metadata":{"order_id":"R596225894"},"details":{"cardHolder":"T.
+        TEST","cardNumber":"6787","cardSecurity":"normal"},"locale":"en","links":{"webhookUrl":"http://37094d3f.ngrok.com//mollie/notify","redirectUrl":"http://127.0.0.1:60601/mollie/check_status/R596225894"}}'
+    http_version: 
+  recorded_at: Thu, 29 Jan 2015 14:54:28 GMT
+recorded_with: VCR 2.9.3
