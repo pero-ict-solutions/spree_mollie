@@ -1,4 +1,5 @@
 Spree::CheckoutController.class_eval do
+  before_action :load_mollie_methods, only: :edit
   before_action :pay_with_mollie, only: :update
 
   private
@@ -12,6 +13,8 @@ Spree::CheckoutController.class_eval do
       if payment_method && payment_method.is_a?(Spree::PaymentMethod::Mollie)
         status_object = MolliePaymentService.new(payment_method: payment_method,
                                                  order: @order,
+                                                 method: params[:order][:payments_attributes].first[:mollie_method_id],
+                                                 issuer: params[:order][:payments_attributes].first[:issuer_id],
                                                  redirect_url: mollie_check_status_url(@order)).create_payment
         if status_object.mollie_error?
           mollie_error && return
@@ -23,6 +26,16 @@ Spree::CheckoutController.class_eval do
         end
         redirect_to status_object.payment_url
       end
+    end
+
+    def load_mollie_methods
+      return unless params[:state] == 'payment'
+
+      payment_method = Spree::PaymentMethod.first
+      service = MolliePaymentService.new(payment_method: payment_method)
+
+      @methods = service.methods
+      @issuers = service.issuers
     end
 
     def mollie_error(e = nil)

@@ -45,6 +45,8 @@ class MolliePaymentService
     @redirect_url = params[:redirect_url]
     @payment_method = params[:payment_method]
     @payment = params[:payment]
+    @method = params[:method]
+    @issuer = params[:issuer]
   end
 
   def update_payment_status
@@ -68,7 +70,7 @@ class MolliePaymentService
   def create_payment
     amount = @order.total
     description = "Order #{@order.number}"
-    response = mollie_client.prepare_payment(amount, description, @redirect_url, {order_id: @order.number})
+    response = mollie_client.prepare_payment(amount, description, @redirect_url, {order_id: @order.number}, @method, issuer: @issuer)
     status_object = StatusObject.new(response)
     if status_object.open?
       payment = @order.payments.build(
@@ -109,6 +111,14 @@ class MolliePaymentService
     end
 
     status_object
+  end
+
+  def methods
+    mollie_client.methods['data']
+  end
+
+  def issuers
+    mollie_client.issuers.collect{|i| [i[:name], i[:id]]}
   end
 
   private
