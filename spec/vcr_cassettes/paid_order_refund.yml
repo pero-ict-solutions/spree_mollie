@@ -1,0 +1,44 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.mollie.nl/v1/payments/tr_ungvmxzhuc/refunds
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Authorization:
+      - Bearer test_pw5ZHNihuiFKefzBwZVwAdKXt5C4Xe
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 29 Jan 2015 14:54:31 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '596'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Max-Age:
+      - '300'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+      X-Whom:
+      - dc1-web-3
+    body:
+      encoding: UTF-8
+      string: '{"id":"re_hKDj7iqkzK","payment":{"id":"tr_ungvmxzhuc","mode":"test","createdDatetime":"2015-01-29T14:54:07.0Z","status":"refunded","paidDatetime":"2015-01-29T14:54:12.0Z","amount":"19.99","amountRefunded":"19.99","description":"Order
+        R596225894","method":"creditcard","metadata":{"order_id":"R596225894"},"details":{"cardHolder":"T.
+        TEST","cardNumber":"6787","cardSecurity":"normal"},"locale":"en","links":{"webhookUrl":"http://37094d3f.ngrok.com//mollie/notify","redirectUrl":"http://127.0.0.1:60601/mollie/check_status/R596225894"}},"amount":"19.99","refundedDatetime":"2015-01-29T14:54:31.0Z"}'
+    http_version: 
+  recorded_at: Thu, 29 Jan 2015 14:54:31 GMT
+recorded_with: VCR 2.9.3

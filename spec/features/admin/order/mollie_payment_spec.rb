@@ -45,21 +45,40 @@ describe "Order Paid By Mollie" do
     page.driver.allow_url("www.mollie.com")
   end
 
-  def cancel_order
-    click_button "Save and Continue"
-    click_link "Back to the website"
+  def emulate_checkout_controller
+    @order = Spree::Order.last
+    MolliePaymentService.new(payment_method: Spree::PaymentMethod.last,
+                             order: @order,
+                             redirect_url: "/mollie/check_status/#{@order.number}").create_payment
+  end
+
+  def emulate_checkout_pay_flow
+    emulate_checkout_controller
+
+    # user get's redirected from mollie
+    get "mollie/check_status/#{@order.number}"
 
     # emulate mollie#notify call from external api
     post '/mollie/notify', id: Spree::Payment.last.transaction_id, use_route: :spree
   end
 
-  def pay_for_order_with_paypal
-    click_button "Save and Continue"
-    click_button "Creditcard"
-    click_button "Verder naar uw webshop"
+  def cancel_order
+    VCR.use_cassette('failed_order_interaction') do
+      # click_button "Save and Continue"
+      # click_link "Back to the website"
 
-    # emulate mollie#notify call from external api
-    post '/mollie/notify', id: Spree::Payment.last.transaction_id, use_route: :spree
+      emulate_checkout_pay_flow
+    end
+  end
+
+  def pay_for_order_with_creditcard
+    VCR.use_cassette('paid_order_interaction') do
+      # click_button "Save and Continue"
+      # click_button "Creditcard"
+      # click_button "Verder naar uw webshop"
+
+      emulate_checkout_pay_flow
+    end
   end
 
   shared_examples 'order with 1 payment' do |expected_payment_status|
@@ -93,9 +112,11 @@ describe "Order Paid By Mollie" do
 
       if expected_payment_status == 'paid'
         it 'can refund payment' do
-          find("#content").find("table").first("a").click # click first link
-          click_link('Refund')
-          expect(page).to have_content('Mollie refund successful')
+          VCR.use_cassette('paid_order_refund') do
+            find("#content").find("table").first("a").click # click first link
+            click_link('Refund')
+            expect(page).to have_content('Mollie refund successful')
+          end
         end
       end
     end
@@ -107,7 +128,7 @@ describe "Order Paid By Mollie" do
     end
 
     it_behaves_like 'order with 1 payment', 'paid' do
-      let(:payment_method) { Proc.new { pay_for_order_with_paypal } }
+      let(:payment_method) { Proc.new { pay_for_order_with_creditcard } }
     end
   end
 end
