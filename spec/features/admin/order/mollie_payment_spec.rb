@@ -26,6 +26,8 @@ describe "Order Paid By Mollie" do
   end
 
   def prepare_order_for_payment
+    page.driver.block_unknown_urls
+    page.driver.allow_url("www.mollie.com")
     visit spree.root_path
     click_link 'iPad'
     click_button 'Add To Cart'
@@ -38,11 +40,11 @@ describe "Order Paid By Mollie" do
     wait_for_ajax
     click_button "Save and Continue"
     # Delivery step doesn't require any action
-    click_button "Save and Continue"
-    choose "Mollie"
 
-    page.driver.block_unknown_urls
-    page.driver.allow_url("www.mollie.com")
+    VCR.use_cassette('load methods and issuers') do
+      click_button "Save and Continue"
+      choose "Mollie"
+    end
   end
 
   def emulate_checkout_controller
