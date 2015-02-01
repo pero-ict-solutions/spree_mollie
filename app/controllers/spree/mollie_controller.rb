@@ -7,5 +7,14 @@ module Spree
 
       render nothing: true, status: :ok
     end
+
+    def check_payment_status
+      order = Spree::Order.find_by_number(params[:order_id])
+      payment_id = order.payments.last.response_code
+
+      MolliePaymentService.new(payment_id: payment_id).update_payment_status
+
+      redirect_to order_path(order)
+    end
   end
 end
