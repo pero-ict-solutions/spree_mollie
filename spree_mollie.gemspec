@@ -17,8 +17,8 @@ Gem::Specification.new do |s|
   s.requirements << 'none'
 
   s.add_dependency 'spree_core', '~> 3.0.0.beta'
-  s.add_dependency 'mollie-ruby'
-  
+  s.add_dependency 'mollie-ruby', '0.2.0'
+
   s.add_development_dependency 'capybara', '~> 2.4'
   s.add_development_dependency 'coffee-rails'
   s.add_development_dependency 'database_cleaner'

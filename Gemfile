@@ -5,6 +5,5 @@ gem 'spree', github: 'spree/spree', branch: 'master'
 gem 'spree_auth_devise', github: 'spree/spree_auth_devise', branch: 'master'
 
 gem "codeclimate-test-reporter", group: :test, require: nil
-gem 'mollie-ruby', github: 'pero-ict-solutions/mollie-ruby', branch: 'master'
 
 gemspec
