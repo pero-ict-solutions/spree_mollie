@@ -113,8 +113,8 @@ class MolliePaymentService
     status_object
   end
 
-  def methods
-    mollie_client.methods['data']
+  def payment_methods
+    mollie_client.payment_methods['data']
   end
 
   def issuers

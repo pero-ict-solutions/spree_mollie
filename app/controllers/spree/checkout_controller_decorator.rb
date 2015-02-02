@@ -34,7 +34,7 @@ Spree::CheckoutController.class_eval do
       payment_method = Spree::PaymentMethod.first
       service = MolliePaymentService.new(payment_method: payment_method)
 
-      @methods = service.methods
+      @payment_methods = service.payment_methods
       @issuers = service.issuers
     end
 

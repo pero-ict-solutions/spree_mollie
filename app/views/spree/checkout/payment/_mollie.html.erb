@@ -1,5 +1,5 @@
 <div class='list-group' id="mollie-methods-list" style="margin-left: 50px">
-  <% @methods.each do |method| %>
+  <% @payment_methods.each do |method| %>
       <label class='list-group-item' style="display: block;">
 
         <%= radio_button_tag  "order[payments_attributes][][mollie_method_id]", method['id'], false %>
