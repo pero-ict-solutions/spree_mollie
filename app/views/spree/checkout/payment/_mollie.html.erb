@@ -7,9 +7,15 @@
         <%= method['description'] %>
       </label>
       <% if method['id'] == 'ideal' %>
-        <%= select_tag 'order[payments_attributes][][issuer_id]', options_for_select(@issuers), class: 'list-group-item', style: 'margin-left: 30px;' %>
+          <div id="mollie-issuers-list" style="margin-left: 50px">
+            <% @issuers.each do |issuer| %>
+              <label class='list-group-item' style="display: block;">
+                <%= radio_button_tag  "order[payments_attributes][][issuer_id]", issuer[:id], @issuers.first == issuer %>
+                <%= issuer[:name] %>
+              </label>
+            <% end %>
+          </div>
       <% end %>
-
 
   <% end %>
 </div>
@@ -19,14 +25,12 @@
       $('#mollie-methods-list').on('change', function(){
           $('#mollie-methods-list input').each(function(){
               if( $(this).prop("checked") ) {
-                  $(this).parent().addClass('active');
                   if( $(this).prop('value') == 'ideal') {
-                      $('#mollie-methods-list select').show();
+                      $('#mollie-methods-list #mollie-issuers-list').show();
                   }
               } else {
-                  $(this).parent().removeClass('active');
                   if( $(this).prop('value') == 'ideal') {
-                      $('#mollie-methods-list select').hide();
+                      $('#mollie-methods-list #mollie-issuers-list').hide();
                   }
               }
           });
