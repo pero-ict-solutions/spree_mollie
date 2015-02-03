@@ -58,7 +58,7 @@ describe "Order Paid By Mollie" do
     emulate_checkout_controller
 
     # user get's redirected from mollie
-    get "mollie/check_status/#{@order.number}"
+    get "/mollie/check_status/#{@order.number}"
 
     # emulate mollie#notify call from external api
     post '/mollie/notify', id: Spree::Payment.last.transaction_id, use_route: :spree
