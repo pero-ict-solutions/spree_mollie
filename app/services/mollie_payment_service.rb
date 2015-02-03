@@ -46,7 +46,7 @@ class MolliePaymentService
     @payment_method = params[:payment_method]
     @payment = params[:payment]
     @method = params[:method]
-    @issuer = params[:issuer]
+    @issuer = params[:issuer] if @method
   end
 
   def update_payment_status
@@ -118,7 +118,7 @@ class MolliePaymentService
   end
 
   def issuers
-    mollie_client.issuers.collect{|i| [i[:name], i[:id]]}
+    mollie_client.issuers
   end
 
   private
