@@ -2,7 +2,7 @@
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_mollie'
-  s.version     = '3.0.0.beta'
+  s.version     = '3.1.0.beta'
   s.summary     = 'Use the Mollie PSP in your Spree storefront'
   s.description = s.summary
   s.required_ruby_version = '>= 2.0.0'
