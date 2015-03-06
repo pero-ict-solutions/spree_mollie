@@ -62,6 +62,7 @@ class MolliePaymentService
           payment.pend! unless payment.pending?
         when 'paid', 'paidout'
           payment.complete! unless payment.completed?
+          payment.order.next! unless payment.order.complete?
       end
     end if payment
 
@@ -82,10 +83,6 @@ class MolliePaymentService
 
       unless payment.save
         status_object.add_error(payment.errors.full_messages.join("\n"))
-      end
-
-      unless @order.next
-        status_object.add_error(@order.errors.full_messages.join("\n"))
       end
 
       payment.pend!

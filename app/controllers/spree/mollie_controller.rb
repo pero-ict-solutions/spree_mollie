@@ -14,7 +14,7 @@ module Spree
 
       MolliePaymentService.new(payment_id: payment_id).update_payment_status
 
-      redirect_to order_path(order)
+      redirect_to order.reload.paid? ? order_path(order) : checkout_state_path(:payment)
     end
   end
 end

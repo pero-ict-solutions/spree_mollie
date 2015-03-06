@@ -54,11 +54,11 @@ describe "Order Paid By Mollie" do
                              redirect_url: "/mollie/check_status/#{@order.number}").create_payment
   end
 
-  def emulate_checkout_pay_flow
+  def emulate_checkout_pay_flow(expected_redirect)
     emulate_checkout_controller
 
     # user get's redirected from mollie
-    get "/mollie/check_status/#{@order.number}"
+    expect(get "/mollie/check_status/#{@order.number}").to redirect_to expected_redirect
 
     # emulate mollie#notify call from external api
     post '/mollie/notify', id: Spree::Payment.last.transaction_id, use_route: :spree
@@ -69,7 +69,7 @@ describe "Order Paid By Mollie" do
       # click_button "Save and Continue"
       # click_link "Back to the website"
 
-      emulate_checkout_pay_flow
+      emulate_checkout_pay_flow("/checkout/payment")
     end
   end
 
@@ -79,7 +79,7 @@ describe "Order Paid By Mollie" do
       # click_button "Creditcard"
       # click_button "Verder naar uw webshop"
 
-      emulate_checkout_pay_flow
+      emulate_checkout_pay_flow("/orders/#{Spree::Order.last.number}")
     end
   end
 
@@ -93,7 +93,7 @@ describe "Order Paid By Mollie" do
       click_link "Orders"
     end
 
-    specify { expect(page).to have_selector('table#listing_orders tbody tr', :count => 1) } # count of orders in table
+    specify { expect(page).to have_selector('table#listing_orders tbody tr', :count => 1 ) } # count of orders in table
 
     context 'and visits payments.' do
       before do
@@ -125,12 +125,18 @@ describe "Order Paid By Mollie" do
   end
 
   context "admin visits orders", js: true do
-    it_behaves_like 'order with 1 payment', 'failed' do
-      let(:payment_method) { Proc.new { cancel_order } }
-    end
-
     it_behaves_like 'order with 1 payment', 'paid' do
       let(:payment_method) { Proc.new { pay_for_order_with_creditcard } }
+    end
+
+    it "can't see completed order when payment cancelled" do
+      prepare_order_for_payment
+
+      cancel_order
+
+      visit spree.admin_path
+      click_link "Orders"
+      expect(page).not_to have_selector('table#listing_orders tbody tr')
     end
   end
 end
