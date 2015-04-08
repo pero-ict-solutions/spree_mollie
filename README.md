@@ -3,8 +3,6 @@ SpreeMollie
 
 Except payments using the [Mollie](https://www.mollie.com) payment provider in Spree
 
-**NOTE This is currently only implemented agains Spree master (3.0.0.beta)**
-
 [![wercker status](https://app.wercker.com/status/52c82d6a6ba0e8d59a4bde329939e420/m "wercker status")](https://app.wercker.com/project/bykey/52c82d6a6ba0e8d59a4bde329939e420)
 
 [![Code Climate](https://codeclimate.com/github/pero-ict-solutions/spree_mollie/badges/gpa.svg)](https://codeclimate.com/github/pero-ict-solutions/spree_mollie)
@@ -27,6 +25,8 @@ Bundle your dependencies and run the installation generator:
 bundle
 bundle exec rails g spree_mollie:install
 ```
+
+Also make sure to set the Live webhook in Mollie to `<YOURSITE>/mollie/notify`
 
 Testing
 -------
