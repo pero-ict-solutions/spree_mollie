@@ -51,15 +51,15 @@ class MolliePaymentService
 
   def update_payment_status
     response = payment_status_in_mollie(@payment_id)
-
     payment = Spree::Payment.find_by_response_code(response['id'])
 
     unless payment.completed? || payment.failed?
       case response['status']
         when 'cancelled', 'expired'
           payment.failure! unless payment.failed?
-        when 'pending'
+        when 'pending', 'open'
           payment.pend! unless payment.pending?
+          payment.order.next! unless payment.order.complete?
         when 'paid', 'paidout'
           payment.complete! unless payment.completed?
           payment.order.next! unless payment.order.complete?
