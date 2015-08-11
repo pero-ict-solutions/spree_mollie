@@ -71,7 +71,7 @@ class MolliePaymentService
   def create_payment
     amount = @order.total
     description = "Order #{@order.number}"
-    response = mollie_client.prepare_payment(amount, description, @redirect_url, {order_id: @order.number}, @method, issuer: @issuer)
+    response = mollie_client.prepare_payment(amount, description, @redirect_url, {order_id: @order.number}, @method, {issuer: @issuer, locale: "en"})
     status_object = StatusObject.new(response)
     if status_object.open?
       payment = @order.payments.build(
